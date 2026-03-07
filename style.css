@@ -531,37 +531,118 @@ body {
 /* --- PORTFOLIO (HORIZONTAL SCROLL) --- */
 .portfolio-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column; /* Cambiamos a columna para apilar título y filtros */
+    justify-content: center;
+    align-items: center; /* Centramos todo horizontalmente */
     margin-bottom: 2rem;
-    flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem; /* Espacio entre el título y los botones */
+    text-align: center;
+}
+/* --- ANIMACIÓN PARA EL FILTRADO DE PORTFOLIO --- */
+.project-card {
+    /* ... mantén tus estilos anteriores ... */
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    opacity: 1;
+    transform: scale(1);
 }
 
+/* Cuando la tarjeta se oculta, se desvanece y se encoge un poco */
+.project-card.hidden {
+    display: none; /* Se mantiene para que no ocupe espacio */
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Clase para el efecto de "aparición" */
+.project-card.fade-in-element {
+    animation: fadeInPortfolio 0.5s ease forwards;
+}
+
+@keyframes fadeInPortfolio {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.portfolio-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px; /* Usamos gap en lugar de margin para espaciar los botones uniformemente */
+}
+
+/* --- ESTILOS DE LOS BOTONES DE FILTRO (NUEVOS) --- */
 .portfolio-filters button {
     background: transparent;
     border: none;
-    color: var(--text-muted);
-    margin-left: 1rem;
+    color: var(--text-muted); /* Gris claro por defecto para no saturar */
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-body);
     position: relative;
-    padding-bottom: 5px;
+    padding: 5px 10px; /* Más área para hacer clic cómodamente */
+    transition: color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
 }
 
-.portfolio-filters button.active, .portfolio-filters button:hover {
-    color: var(--accent-cyan);
+/* Efecto al pasar el mouse (Hover) */
+.portfolio-filters button:hover {
+    color: var(--accent-blue); /* Cambia al azul de tu paleta */
+    transform: translateY(-2px); /* Pequeño salto hacia arriba */
 }
 
-.portfolio-filters button.active::after {
+/* Estado del botón seleccionado (Activo) */
+.portfolio-filters button.active {
+    color: var(--accent-blue);
+    text-shadow: 0 0 10px rgba(0, 180, 216, 0.4); /* Un ligero brillo */
+}
+
+/* La línea debajo del texto (creada con un pseudo-elemento) */
+.portfolio-filters button::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    left: 50%; /* La posicionamos en el centro */
+    transform: translateX(-50%); /* Centrado exacto */
+    width: 0; /* Empieza invisible (ancho 0) */
     height: 2px;
-    background: var(--accent-cyan);
+    background: var(--accent-blue);
+    border-radius: 2px;
+    transition: width 0.3s ease; /* Se animará al cambiar el ancho */
 }
+
+/* Cuando pasas el mouse o está activo, la línea crece al 100% */
+.portfolio-filters button:hover::after,
+.portfolio-filters button.active::after {
+    width: 100%;
+}
+
+/* Modificamos el scroll-hint para que parezca un botón interactivo */
+.scroll-hint {
+    display: flex;
+    justify-content: flex-end; /* Lo mantenemos a la derecha */
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 15px;
+    cursor: pointer; /* Fundametal para indicar que es clickeable */
+    transition: all 0.3s ease;
+    user-select: none; /* Evita que el texto se seleccione al hacer clics rápidos */
+}
+
+.scroll-hint:hover {
+    color: var(--accent-cyan);
+    transform: translateX(5px); /* Pequeño movimiento al pasar el mouse */
+}
+
+/* Quitamos la animación de parpadeo anterior porque ahora es un botón, no solo un aviso */
+/* Borra o comenta el @keyframes blink si ya no lo usas en otro lado */
 
 .full-width {
     width: 100%;
@@ -598,22 +679,82 @@ body {
 
 .portfolio-track {
     display: inline-flex;
-    gap: 20px;
-    height: 400px; /* Altura fija para la fila */
+    gap: 30px; /* Más espacio para respirar entre tarjetas */
+    height: 260px; /* Reducimos un poco la altura... */
+    padding: 15px 0; /* Espacio vertical para que las sombras al hacer hover no se corten */
 }
 
 .project-card {
-    width: 350px;
+    width: 450px; /* ...y aumentamos el ancho para formato panorámico (pantalla PC) */
     height: 100%;
-    background: var(--glass-bg);
-    border-radius: 10px;
+    background: var(--bg-blue-deep);
+    border-radius: 12px;
     overflow: hidden;
     position: relative;
-    flex-shrink: 0; /* No encogerse */
-    border: 1px solid transparent;
-    transition: all 0.3s;
+    flex-shrink: 0;
+    /* Un borde sutil permanente ayuda a delimitar páginas web blancas */
+    border: 1px solid var(--glass-border); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card.hidden {
+    display: none;
+}
+
+/* Efecto hover mejorado: la tarjeta entera se levanta levemente */
+.project-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 12px 25px rgba(100, 255, 218, 0.15);
+}
+
+.project-img-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #000; /* Fondo negro por si la imagen tarda en cargar */
+}
+
+.project-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: top center; /* CRUCIAL: Muestra siempre el header/menú de la captura */
+    transition: transform 0.6s ease;
+}
+
+.project-card:hover .project-img-container img {
+    transform: scale(1.05); /* Escala más suave, 1.1 era un poco agresivo */
+}
+
+.project-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 1.5rem 1.5rem 1.5rem; /* Más padding arriba para un degradado más suave */
+    background: linear-gradient(to top, rgba(5, 10, 20, 0.95) 0%, rgba(5, 10, 20, 0.7) 50%, transparent 100%);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.project-card:hover .project-overlay {
+    transform: translateY(0);
     opacity: 1;
-    transform: scale(1);
+}
+
+.project-overlay h4 { 
+    color: var(--accent-cyan); 
+    margin-bottom: 5px; 
+    font-size: 1.2rem;
+    font-family: var(--font-title);
+}
+
+.project-overlay p {
+    color: var(--text-main);
+    font-size: 0.9rem;
 }
 
 .project-card.hidden {
@@ -657,11 +798,21 @@ body {
 .project-overlay h4 { color: var(--accent-cyan); margin-bottom: 5px; }
 
 .scroll-hint {
-    text-align: right;
-    font-size: 0.8rem;
+    display: flex;
+    justify-content: flex-end; /* Lo mantenemos a la derecha */
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    margin-top: 10px;
-    animation: blink 2s infinite;
+    margin-top: 15px;
+    cursor: pointer; /* Fundametal para indicar que es clickeable */
+    transition: all 0.3s ease;
+    user-select: none; /* Evita que el texto se seleccione al hacer clics rápidos */
+}
+
+.scroll-hint:hover {
+    color: var(--accent-cyan);
+    transform: translateX(5px); /* Pequeño movimiento al pasar el mouse */
 }
 
 /* --- ABOUT & RESEÑAS --- */
