@@ -65,28 +65,35 @@ document.addEventListener('DOMContentLoaded', () => {
         'contact': 'bg-gradient-contact'
     };
 
-    function navigateTo(targetId) {
-        // Ocultar todas
-        sections.forEach(sec => sec.classList.remove('active-section'));
+   // Agregamos el parámetro addToHistory (por defecto es true)
+function navigateTo(targetId, addToHistory = true) {
+    // Ocultar todas
+    sections.forEach(sec => sec.classList.remove('active-section'));
 
-        // Mostrar la elegida
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) targetSection.classList.add('active-section');
+    // Mostrar la elegida
+    const targetSection = document.getElementById(targetId);
+    if (targetSection) targetSection.classList.add('active-section');
 
-        // Actualizar estados visuales de los botones
-        navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.target === targetId));
+    // Actualizar estados visuales de los botones
+    navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.target === targetId));
 
-        // Cambiar fondo dinámico
-        if(bgLayer) {
-            bgLayer.className = ''; 
-            if (sectionThemes[targetId]) bgLayer.classList.add(sectionThemes[targetId]);
-        }
-
-        // Cerrar menú móvil si se usó
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            toggleMobileMenu();
-        }
+    // Cambiar fondo dinámico
+    if(bgLayer) {
+        bgLayer.className = ''; 
+        if (sectionThemes[targetId]) bgLayer.classList.add(sectionThemes[targetId]);
     }
+
+    // Cerrar menú móvil si se usó
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
+
+    // NUEVO: Agregar la sección al historial del navegador
+    if (addToHistory) {
+        // history.pushState guarda el estado actual en el historial
+        window.history.pushState({ section: targetId }, "", `#${targetId}`);
+    }
+}
 
     navButtons.forEach(btn => btn.addEventListener('click', () => navigateTo(btn.dataset.target)));
     mobNavButtons.forEach(btn => btn.addEventListener('click', () => navigateTo(btn.dataset.target)));
@@ -182,8 +189,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
 
+    // --- 6. FILTRADO SUAVE DE PORTFOLIO ---
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            // Cambiar estado activo de los botones
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
@@ -191,11 +200,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             projectCards.forEach(card => {
                 const category = card.dataset.category;
+                
+                // Primero quitamos cualquier animación previa
+                card.style.animation = 'none';
+                
                 if (filterValue === 'all' || category === filterValue) {
+                    // Mostramos el elemento
                     card.classList.remove('hidden');
-                    card.style.opacity = '0';
-                    setTimeout(() => card.style.opacity = '1', 50);
+                    // Forzamos un pequeño "reflujo" para que el navegador note el cambio
+                    void card.offsetWidth; 
+                    // Aplicamos la animación de aparición suave
+                    card.style.animation = 'fadeInPortfolio 0.5s ease forwards';
                 } else {
+                    // Ocultamos el elemento
                     card.classList.add('hidden');
                 }
             });
@@ -209,6 +226,45 @@ document.addEventListener('DOMContentLoaded', () => {
             if(scrollContainer.scrollWidth > scrollContainer.clientWidth) {
                 evt.preventDefault();
                 scrollContainer.scrollLeft += evt.deltaY;
+            }
+        });
+    }
+    // --- Lógica del botón "Desliza para ver más" (Carrusel) ---
+    const scrollActionBtn = document.getElementById('scroll-action-btn');
+    
+    if (scrollActionBtn && scrollContainer) {
+        // Ancho de la tarjeta (350px) + el gap (20px) definido en el CSS
+        const scrollAmount = 370; 
+
+        scrollActionBtn.addEventListener('click', () => {
+            // maxScroll es el punto máximo al que podemos scrollear hacia la derecha
+            const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+
+            // Si ya estamos al final (o casi al final), volvemos al principio
+            if (scrollContainer.scrollLeft >= maxScrollLeft - 10) {
+                scrollContainer.scrollTo({
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            } else {
+                // Si no, avanzamos a la derecha
+                scrollContainer.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        // Escuchamos el scroll para actualizar el texto del botón dinámicamente
+        scrollContainer.addEventListener('scroll', () => {
+            const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            
+            if (scrollContainer.scrollLeft >= maxScrollLeft - 10) {
+                // Llegó al final
+                scrollActionBtn.innerHTML = '<i class="fas fa-undo"></i> Volver al inicio';
+            } else {
+                // Aún hay más para ver
+                scrollActionBtn.innerHTML = 'Haz clic o desliza para ver más <i class="fas fa-chevron-right"></i>';
             }
         });
     }
@@ -322,7 +378,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Inicializar la SPA en Home si no hay sección activa
-    if (!document.querySelector('.active-section')) {
-        navigateTo('home');
-    }
+    // --- LÓGICA DEL HISTORIAL DEL NAVEGADOR (HISTORY API) ---
+
+    // 1. Verificar si el usuario entró con un enlace directo (ej: mizarweb.com/#services)
+    const hash = window.location.hash.replace('#', '');
+    // Validar que la sección del enlace exista, si no, ir a 'home'
+    const initialSection = sectionOrder.includes(hash) ? hash : 'home';
+    
+    // 2. Cargar la sección inicial sin agregar un nuevo historial (usamos replaceState)
+    navigateTo(initialSection, false); 
+    window.history.replaceState({ section: initialSection }, "", `#${initialSection}`);
+
+    // 3. Escuchar el evento 'popstate' (Se dispara al presionar Atrás/Adelante en el navegador)
+    window.addEventListener('popstate', (e) => {
+        // Si hay un estado guardado en el historial, vamos a esa sección
+        // Si no hay (porque llegamos al inicio), vamos a 'home'
+        const section = e.state ? e.state.section : 'home';
+        
+        // Navegamos a la sección, pero pasamos 'false' para NO volver a guardarlo en el historial
+        navigateTo(section, false); 
+    });
+
 });
