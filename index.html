@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio | Mizar Web</title>
+    <meta name="description" content="Agencia de desarrollo web, IA y automatización fundada por Facundo Villalba y Juan Pablo Keller.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="preloader"><div class="loader-container"><div class="loader-ring ring-one"></div><div class="loader-ring ring-two"></div><div class="loader-core"></div></div><div class="loader-text-container"><span class="loader-text" data-final="MIZAR WEB">CARGANDO</span><div class="loader-bar"><div class="bar-fill"></div></div></div></div>
+
+    <div id="background-layer" class="bg-gradient-home"></div>
+    <canvas id="starfield"></canvas>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="star-wrapper"><div class="binary-star-icon"><div class="star s1"></div><div class="star s2"></div></div></div>
+            <span class="logo-text">MIZAR WEB</span>
+        </div>
+        <nav class="desktop-nav">
+            <a href="index.html" class="nav-btn active">Inicio</a>
+            <a href="nosotros.html" class="nav-btn">Nosotros</a>
+            <a href="servicios.html" class="nav-btn">Servicios</a>
+            <a href="proyectos.html" class="nav-btn">Proyectos</a>
+            <a href="contacto.html" class="nav-btn">Contacto</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Abrir menú"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></button>
+    </header>
+
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="index.html" class="mob-nav-btn">Inicio</a>
+            <a href="nosotros.html" class="mob-nav-btn">Nosotros</a>
+            <a href="servicios.html" class="mob-nav-btn">Servicios</a>
+            <a href="proyectos.html" class="mob-nav-btn">Proyectos</a>
+            <a href="contacto.html" class="mob-nav-btn">Contacto</a>
+        </nav>
+    </div>
+
+    <main id="main-content">
+        <section class="section">
+            <div class="content-wrapper center-content">
+                <h1 class="glitch-title" data-text="SOLUCIONES DIGITALES">SOLUCIONES DIGITALES</h1>
+                <p class="subtitle fade-in">Desarrollo Web Full Stack + Inteligencia Artificial</p>
+                <div class="hero-actions fade-in-delay">
+                    <a href="proyectos.html" class="btn-primary glow-effect" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Ver Trabajos</a>
+                    <a href="contacto.html" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Cotizar Proyecto</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
