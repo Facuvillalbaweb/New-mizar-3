@@ -210,19 +210,28 @@ ul  { list-style: none; }
     align-items: center;
     gap: 12px;
     cursor: pointer;
+    text-decoration: none; /* Previene el subrayado del tag <a> */
+    position: relative;
 }
-
 .logo-text {
     font-family: var(--font-title);
     font-weight: 700;
     font-size: 1rem;
     color: var(--text-main);
     letter-spacing: 3px;
+    position: relative;
+    z-index: 2; /* Mantiene el texto por encima para tapar las esferas */
+    transition: color 0.3s ease;
+    background-clip: text;
+    -webkit-background-clip: text;
 }
-
 /* Icono binario */
-.star-wrapper { display: flex; align-items: center; }
-
+.star-wrapper { 
+    display: flex; 
+    align-items: center; 
+    position: relative;
+    z-index: 1; /* Permite que las esferas pasen por debajo del texto */
+}
 .binary-star-icon {
     position: relative;
     width: 30px;
@@ -230,7 +239,29 @@ ul  { list-style: none; }
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Transición suave para el movimiento y la opacidad */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }
+
+/* --- NUEVOS EFECTOS HOVER DEL LOGO --- */
+.logo-container:hover .binary-star-icon {
+    transform: translateX(35px) scale(0.6); /* Desliza hacia la derecha (atrás del texto) y se achica */
+    opacity: 0; /* Se desvanece suavemente */
+}
+
+.logo-container:hover .logo-text {
+    color: transparent;
+    -webkit-text-fill-color: transparent; /* Soporte cross-browser */
+    background-image: linear-gradient(90deg, var(--accent-cyan) 0%, var(--accent-blue) 50%, var(--accent-cyan) 100%);
+    background-size: 200% auto;
+    animation: gradientTextFlow 1.5s linear infinite;
+}
+
+@keyframes gradientTextFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+/* ------------------------------------- */
 
 .binary-star-icon .star {
     position: absolute;
