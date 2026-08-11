@@ -96,16 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-    
-    const scrollContainer = document.querySelector('.horizontal-scroll-container');
-    if (scrollContainer) {
-        scrollContainer.addEventListener('wheel', (evt) => {
-            if(scrollContainer.scrollWidth > scrollContainer.clientWidth) {
-                evt.preventDefault();
-                scrollContainer.scrollLeft += evt.deltaY;
-            }
-        });
-    }
 
     // --- 5. CARRUSEL DE RESEÑAS ---
     const track = document.querySelector('.carousel-track');
