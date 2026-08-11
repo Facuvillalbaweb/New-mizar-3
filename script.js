@@ -124,51 +124,97 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prevButton) prevButton.addEventListener('click', () => { currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length; updateCarousel(); });
     }
 
-    // --- 6. STARFIELD (PARTÍCULAS DE FONDO) ---
+    // --- 6. AURORA BACKGROUND (ONDAS DE GRADIENTE SUAVES) ---
     const canvas = document.getElementById('starfield');
     if (canvas) {
         const ctx = canvas.getContext('2d');
-        let width, height, stars = [];
-        const starCount = 100, connectionDistance = 100;
+        let width, height, blobs = [], stars = [];
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Paleta oficial de la marca (ver style.css :root)
+        const palette = [
+            { r: 100, g: 255, b: 218 }, // --accent-cyan
+            { r: 0,   g: 180, b: 216 }, // --accent-blue
+            { r: 123, g: 44,  b: 191 }  // --accent-purple
+        ];
 
         function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-        
+
+        // Cada "blob" es una gran mancha de gradiente radial que deriva
+        // lentamente en un recorrido orgánico (senos/cosenos desfasados),
+        // simulando una aurora boreal suave sobre el fondo oscuro.
+        class AuroraBlob {
+            constructor(colorIndex) {
+                this.color = palette[colorIndex % palette.length];
+                this.baseX = Math.random();
+                this.baseY = Math.random();
+                this.radiusRatio = 0.38 + Math.random() * 0.22;
+                this.speed = 0.00012 + Math.random() * 0.00010;
+                this.angle = Math.random() * Math.PI * 2;
+                this.driftX = 0.16 + Math.random() * 0.12;
+                this.driftY = 0.12 + Math.random() * 0.10;
+                this.alpha = 0.14 + Math.random() * 0.07;
+            }
+            update(t) {
+                this.x = (this.baseX + Math.sin(t * this.speed + this.angle) * this.driftX) * width;
+                this.y = (this.baseY + Math.cos(t * this.speed * 0.8 + this.angle) * this.driftY) * height;
+            }
+            draw() {
+                const r = Math.max(width, height) * this.radiusRatio;
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r);
+                gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`);
+                gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, width, height);
+            }
+        }
+
+        // Un puñado de estrellas muy tenues y sin conexiones, como guiño
+        // a la identidad "Mizar" sin volver al look anterior de puntos.
         class Star {
             constructor() {
                 this.x = Math.random() * width; this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2;
+                this.size = Math.random() * 1.1 + 0.3;
+                this.baseAlpha = Math.random() * 0.3 + 0.1;
+                this.twinkleSpeed = 0.0006 + Math.random() * 0.0008;
+                this.phase = Math.random() * Math.PI * 2;
             }
-            update() {
-                this.x += this.vx; this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.fillStyle = "rgba(255, 255, 255, 0.5)"; ctx.beginPath();
+            draw(t) {
+                const alpha = this.baseAlpha * (0.5 + 0.5 * Math.sin(t * this.twinkleSpeed + this.phase));
+                ctx.fillStyle = `rgba(230, 241, 255, ${alpha})`;
+                ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
-        function initStars() { stars = []; for (let i = 0; i < starCount; i++) stars.push(new Star()); }
+        function init() {
+            blobs = [0, 1, 2, 0, 1].map(i => new AuroraBlob(i));
+            stars = Array.from({ length: 45 }, () => new Star());
+        }
 
-        function animate() {
+        function renderFrame(t) {
             ctx.clearRect(0, 0, width, height);
-            stars.forEach(star => { star.update(); star.draw(); });
-            for (let i = 0; i < stars.length; i++) {
-                for (let j = i + 1; j < stars.length; j++) {
-                    const dx = stars[i].x - stars[j].x, dy = stars[i].y - stars[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < connectionDistance) {
-                        ctx.strokeStyle = `rgba(100, 255, 218, ${1 - dist/connectionDistance})`;
-                        ctx.lineWidth = 0.5; ctx.beginPath();
-                        ctx.moveTo(stars[i].x, stars[i].y); ctx.lineTo(stars[j].x, stars[j].y); ctx.stroke();
-                    }
-                }
-            }
+            ctx.globalCompositeOperation = 'lighter';
+            blobs.forEach(blob => { blob.update(t); blob.draw(); });
+            ctx.globalCompositeOperation = 'source-over';
+            stars.forEach(star => star.draw(t));
+        }
+
+        function animate(t) {
+            renderFrame(t);
             requestAnimationFrame(animate);
         }
-        window.addEventListener('resize', resize); resize(); initStars(); animate();
+
+        window.addEventListener('resize', resize);
+        resize();
+        init();
+
+        // Respetamos la preferencia de movimiento reducido del usuario
+        if (prefersReducedMotion) {
+            renderFrame(0);
+        } else {
+            requestAnimationFrame(animate);
+        }
     }
     // --- 7. SMART HEADER (Oculta el menú al bajar, lo muestra al subir) ---
     const header = document.querySelector('.main-header');
