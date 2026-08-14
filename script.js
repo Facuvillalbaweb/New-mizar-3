@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(loaderText) {
         const finalVal = loaderText.getAttribute('data-final') || "CARGANDO";
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let iterations = 0;
-        
-        // Animación de las letras estilo "Matrix"
+
+        // Revelado progresivo de las letras, más pausado y prolijo
         const interval = setInterval(() => {
             loaderText.innerText = finalVal.split('')
                 .map((letter, index) => {
@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     return characters[Math.floor(Math.random() * characters.length)];
                 }).join('');
             if(iterations >= finalVal.length) clearInterval(interval);
-            iterations += 1/3; 
-        }, 50);
+            iterations += 1/4;
+        }, 60);
     }
 
     // Lógica de tiempo de carga inteligente
@@ -228,4 +228,146 @@ document.addEventListener('DOMContentLoaded', () => {
             ultimoScroll = scrollActual;
         });
     });
+
+    // --- 8. POPOVER DE RESEÑAS (Inicio) ---
+    const reviewsTriggerBtn = document.getElementById('reviewsTriggerBtn');
+    const reviewsPopover = document.getElementById('reviewsPopover');
+    const reviewsBackdrop = document.getElementById('reviewsBackdrop');
+
+    function closeReviewsPopover() {
+        if (reviewsPopover) reviewsPopover.classList.remove('active');
+        if (reviewsBackdrop) reviewsBackdrop.classList.remove('active');
+    }
+
+    if (reviewsTriggerBtn && reviewsPopover) {
+        reviewsTriggerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isActive = reviewsPopover.classList.toggle('active');
+            if (reviewsBackdrop) reviewsBackdrop.classList.toggle('active', isActive);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (reviewsPopover.classList.contains('active') && !e.target.closest('.reviews-popover')) {
+                closeReviewsPopover();
+            }
+        });
+    }
+
+    // --- 9. PORTFOLIO: ARRASTRAR PARA DESPLAZAR (2 filas, scroll horizontal) ---
+    const portfolioScroll = document.querySelector('.portfolio-scroll-container');
+    if (portfolioScroll) {
+        let isDown = false;
+        let dragMoved = false;
+        let startX = 0;
+        let scrollStart = 0;
+
+        const dragStart = (x) => {
+            isDown = true;
+            dragMoved = false;
+            startX = x;
+            scrollStart = portfolioScroll.scrollLeft;
+            portfolioScroll.classList.add('dragging');
+        };
+        const dragMove = (x) => {
+            if (!isDown) return;
+            const delta = x - startX;
+            if (Math.abs(delta) > 5) dragMoved = true;
+            portfolioScroll.scrollLeft = scrollStart - delta;
+        };
+        const dragEnd = () => {
+            isDown = false;
+            portfolioScroll.classList.remove('dragging');
+        };
+
+        portfolioScroll.addEventListener('dragstart', (e) => e.preventDefault());
+        portfolioScroll.addEventListener('mousedown', (e) => dragStart(e.pageX));
+        window.addEventListener('mousemove', (e) => { if (isDown) { e.preventDefault(); dragMove(e.pageX); } });
+        window.addEventListener('mouseup', dragEnd);
+
+        portfolioScroll.addEventListener('touchstart', (e) => dragStart(e.touches[0].pageX), { passive: true });
+        portfolioScroll.addEventListener('touchmove', (e) => dragMove(e.touches[0].pageX), { passive: true });
+        portfolioScroll.addEventListener('touchend', dragEnd);
+
+        portfolioScroll.addEventListener('click', (e) => {
+            if (dragMoved) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
+    }
+
+    // --- 10. SWIPE ENTRE PÁGINAS (arrastrar el dedo hacia los costados) ---
+    const pageOrder = ['index.html', 'servicios.html', 'proyectos.html', 'contacto.html'];
+
+    function currentPageIndex() {
+        let path = location.pathname.split('/').pop();
+        if (path === '') path = 'index.html';
+        const idx = pageOrder.indexOf(path);
+        return idx === -1 ? 0 : idx;
+    }
+
+    function goToAdjacentPage(delta) {
+        const nextIdx = currentPageIndex() + delta;
+        if (nextIdx >= 0 && nextIdx < pageOrder.length) {
+            window.location.href = pageOrder[nextIdx];
+        }
+    }
+
+    (function initPageSwipeNavigation() {
+        const SWIPE_THRESHOLD = 80;
+        let tracking = false;
+        let startX = 0;
+        let startY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            const target = e.target;
+            if (target.closest('[data-no-swipe]') || target.closest('.mobile-menu-overlay') || target.closest('.reviews-popover')) {
+                tracking = false;
+                return;
+            }
+            tracking = true;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            if (!tracking) return;
+            tracking = false;
+            const touch = e.changedTouches[0];
+            const dx = touch.clientX - startX;
+            const dy = touch.clientY - startY;
+            if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                goToAdjacentPage(dx < 0 ? 1 : -1);
+            }
+        });
+    })();
+
+    // --- 11. MENÚ MÓVIL: ARRASTRAR HACIA LA DERECHA PARA CERRAR ---
+    if (mobileMenu) {
+        const CLOSE_THRESHOLD = 90;
+        let menuDragging = false;
+        let menuStartX = 0;
+        let menuCurrentX = 0;
+
+        mobileMenu.addEventListener('touchstart', (e) => {
+            if (!mobileMenu.classList.contains('active')) return;
+            menuDragging = true;
+            menuStartX = e.touches[0].clientX;
+            menuCurrentX = menuStartX;
+            mobileMenu.style.transition = 'none';
+        }, { passive: true });
+
+        mobileMenu.addEventListener('touchmove', (e) => {
+            if (!menuDragging) return;
+            menuCurrentX = e.touches[0].clientX;
+            const delta = Math.max(0, menuCurrentX - menuStartX);
+            mobileMenu.style.transform = `translateX(${delta}px)`;
+        }, { passive: true });
+
+        mobileMenu.addEventListener('touchend', () => {
+            if (!menuDragging) return;
+            menuDragging = false;
+            mobileMenu.style.transition = '';
+            const delta = menuCurrentX - menuStartX;
+            mobileMenu.style.transform = '';
+            if (delta > CLOSE_THRESHOLD) toggleMobileMenu();
+        });
+    }
 });

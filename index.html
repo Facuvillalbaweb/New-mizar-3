@@ -25,7 +25,6 @@
         </a>
         <nav class="desktop-nav">
             <a href="index.html" class="nav-btn active">Inicio</a>
-            <a href="nosotros.html" class="nav-btn">Nosotros</a>
             <a href="servicios.html" class="nav-btn">Servicios</a>
             <a href="proyectos.html" class="nav-btn">Proyectos</a>
             <a href="contacto.html" class="nav-btn">Contacto</a>
@@ -36,25 +35,115 @@
     <div class="mobile-menu-overlay">
         <nav class="mobile-nav">
             <a href="index.html" class="mob-nav-btn">Inicio</a>
-            <a href="nosotros.html" class="mob-nav-btn">Nosotros</a>
             <a href="servicios.html" class="mob-nav-btn">Servicios</a>
             <a href="proyectos.html" class="mob-nav-btn">Proyectos</a>
             <a href="contacto.html" class="mob-nav-btn">Contacto</a>
         </nav>
+        <div class="mobile-social-row">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/5493751340173" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
     </div>
 
     <main id="main-content">
         <section class="section">
-            <div class="content-wrapper center-content">
-                <h1 class="glitch-title" data-text="SOLUCIONES DIGITALES">SOLUCIONES DIGITALES</h1>
-                <p class="subtitle fade-in">Desarrollo Web Full Stack + Inteligencia Artificial</p>
-                <div class="hero-actions fade-in-delay">
-                    <a href="proyectos.html" class="btn-primary glow-effect" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Ver Trabajos</a>
-                    <a href="contacto.html" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Cotizar Proyecto</a>
+            <div class="content-wrapper">
+
+                <div class="hero-block center-content">
+                    <div class="hero-reviews-content">
+                        <div class="hero-text-container">
+                            <p class="subtitle fade-in">Hola, ¿cómo estás?</p>
+                            <h1 class="glitch-title" data-text="¿Empezamos a crear tus ideas?">¿Empezamos a crear tus ideas?</h1>
+                            <div class="hero-actions fade-in-delay">
+                                <a href="proyectos.html" class="btn-primary glow-effect">Trabajos</a>
+                                <a href="contacto.html" class="btn-secondary">Hablanos</a>
+                            </div>
+                        </div>
+                        <div class="content-button">
+                            <button class="reviews-trigger-btn" id="reviewsTriggerBtn" type="button"><i class="fas fa-comment-dots"></i> Reseñas</button>
+                        </div>
+                        
+                    </div>
+                    
+                
+            <div class="about-founders-container">
+                    <div class="content-about-and-bio">
+
+                
+                        <div class="about-header-container">
+                            <h2 class="section-title title-about-hero">Somos Mizar</h2>
+                        </div>
+
+                        <p class="about-description">
+                            En <strong>Mizar Web</strong> fusionamos diseño innovador, desarrollo robusto y el poder de la Inteligencia Artificial. Somos una agencia digital conformada por profesionales apasionados por crear soluciones que no solo se ven increíbles, sino que rinden al máximo nivel. Nos especializamos en transformar ideas complejas en experiencisas web fluidas, optimizadas y escalables para llevar tu presencia digital a la siguiente nivel.
+                        </p>
+                    </div>
+                    <div class="founders-container">
+                        <div class="founder-card glass-panel">
+                            <div class="founder-img"><img src="images/facundo-villalba.jpeg" alt="Facundo Villalba"></div>
+                            <div class="founder-info">
+                                <h3>Facundo Villalba</h3>
+                                <span class="role">Fundador & Full Stack Dev</span>
+
+                                <p>Especialista en Frontend, automatización de procesos e integración de Inteligencia Artificial.</p>
+                                <div class="founder-socials">
+                                    <a href="#" aria-label="Instagram de Facundo"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://wa.me/5493751340173" target="_blank" rel="noopener" aria-label="WhatsApp de Facundo"><i class="fab fa-whatsapp"></i></a>
+                                    <a href="#" aria-label="LinkedIn de Facundo"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" aria-label="Facebook de Facundo"><i class="fab fa-facebook"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="founder-card glass-panel">
+                            <div class="founder-img"><img src="images/juanpablo-keller.jpeg" alt="Juan Pablo Keller"></div>
+                            <div class="founder-info">
+                                <h3>Juan Pablo Keller</h3>
+                                <span class="role">Co-Fundador & Lead Developer</span>
+                                <p>Hábil en Backend, optimización de codigo y eficiencia en sistemas mediante Inteligencia Artificial.</p>
+                                <div class="founder-socials">
+                                    <a href="#" aria-label="Instagram de Juan Pablo"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://wa.me/5493751340173" target="_blank" rel="noopener" aria-label="WhatsApp de Juan Pablo"><i class="fab fa-whatsapp"></i></a>
+                                    <a href="#" aria-label="LinkedIn de Juan Pablo"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" aria-label="Facebook de Juan Pablo"><i class="fab fa-facebook"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <div class="reviews-popover-backdrop" id="reviewsBackdrop"></div>
+    <div class="reviews-popover glass-panel" id="reviewsPopover">
+        <div class="testimonials-wrapper">
+            <div class="carousel-container">
+                <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track-container">
+                    <ul class="carousel-track">
+                        <li class="carousel-slide current-slide">
+                            <div class="review-avatar"><i class="fas fa-user"></i></div>
+                            <span class="review-name">María González <small>CEO TechSolutions</small></span>
+                            <blockquote>"Mizar Web transformó completamente nuestra presencia digital. La automatización nos ahorró horas de trabajo."</blockquote>
+                        </li>
+                        <li class="carousel-slide">
+                            <div class="review-avatar"><i class="fas fa-user"></i></div>
+                            <span class="review-name">Carlos Ruiz <small>Director de Marketing</small></span>
+                            <blockquote>"Profesionales, rápidos y con un diseño impecable. Entendieron nuestra visión desde el primer día."</blockquote>
+                        </li>
+                        <li class="carousel-slide">
+                            <div class="review-avatar"><i class="fas fa-user"></i></div>
+                            <span class="review-name">Sofía Martínez <small>E-commerce Manager</small></span>
+                            <blockquote>"La integración de IA en nuestro sitio web ha mejorado la atención al cliente un 200%."</blockquote>
+                        </li>
+                    </ul>
+                </div>
+                <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:\\\\Users\\\\54375\\\\Desktop\\\\IT\\\\my-projects-web\\\\new-mizar-3-main\" status)",
+      "Bash(git -C \"C:\\\\Users\\\\54375\\\\Desktop\\\\IT\\\\my-projects-web\\\\new-mizar-3-main\" log --oneline -5)"
+    ]
+  }
+}

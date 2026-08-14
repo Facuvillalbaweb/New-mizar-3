@@ -19,13 +19,12 @@
     <canvas id="starfield"></canvas>
 
     <header class="main-header">
-        <div class="logo-container">
+        <a href="index.html" class="logo-container">
             <div class="star-wrapper"><div class="binary-star-icon"><div class="star s1"></div><div class="star s2"></div></div></div>
             <span class="logo-text">MIZAR WEB</span>
-        </div>
+        </a>
         <nav class="desktop-nav">
             <a href="index.html" class="nav-btn">Inicio</a>
-            <a href="nosotros.html" class="nav-btn">Nosotros</a>
             <a href="servicios.html" class="nav-btn">Servicios</a>
             <a href="proyectos.html" class="nav-btn active">Proyectos</a>
             <a href="contacto.html" class="nav-btn">Contacto</a>
@@ -36,11 +35,16 @@
     <div class="mobile-menu-overlay">
         <nav class="mobile-nav">
             <a href="index.html" class="mob-nav-btn">Inicio</a>
-            <a href="nosotros.html" class="mob-nav-btn">Nosotros</a>
             <a href="servicios.html" class="mob-nav-btn">Servicios</a>
             <a href="proyectos.html" class="mob-nav-btn">Proyectos</a>
             <a href="contacto.html" class="mob-nav-btn">Contacto</a>
         </nav>
+        <div class="mobile-social-row">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/5493751340173" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
     </div>
 
     <main id="main-content">
@@ -63,10 +67,11 @@
                     </div>
                 </div>
 
-                <!-- GRILLA MASONRY -->
-                <div class="portfolio-masonry">
+                <!-- GRILLA SCROLL HORIZONTAL, 2 FILAS -->
+                <div class="portfolio-scroll-container" data-no-swipe>
+                    <div class="portfolio-grid">
 
-                    <div class="project-card card-size-a" data-category="landingpage">
+                    <div class="project-card" data-category="landingpage">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #0a2540 0%, #1a4a7a 100%);">
                             <img src="images/images-proyects/item.amatista.png" alt="Hotel Amatista" loading="lazy">
                             <div class="card-base-info">
@@ -80,7 +85,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card card-size-c" data-category="institucional">
+                    <div class="project-card" data-category="institucional">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #0d3349 0%, #0a4a6e 100%);">
                             <img src="images/images-proyects/item.chascomus.png" alt="Guardería Náutica" loading="lazy">
                             <div class="card-base-info">
@@ -94,9 +99,9 @@
                         </div>
                     </div>
 
-                    <div class="project-card card-size-b" data-category="onepage">
+                    <div class="project-card" data-category="onepage">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #0d1f0d 0%, #1a3d1a 100%);">
-                            <img src="images/images-proyects/item-blackforce.png" alt="FitLife Gym" loading="lazy">
+                            <img src="images/images-proyects/item-fitlife.png" alt="FitLife Gym" loading="lazy">
                             <div class="card-base-info">
                                 <span class="overlay-tag">One Page</span>
                                 <h4>FitLife Gym</h4>
@@ -108,7 +113,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card card-size-d" data-category="institucional">
+                    <div class="project-card" data-category="institucional">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #1a1a0d 0%, #2e2e10 100%);">
                             <img src="images/images-proyects/item-abogados.png" alt="Estudio Jurídico" loading="lazy">
                             <div class="card-base-info">
@@ -122,7 +127,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card card-size-a" data-category="institucional">
+                    <div class="project-card" data-category="institucional">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #0a2a40 0%, #0f4060 100%);">
                             <img src="images/images-proyects/item-turismoarg.png" alt="Turismo Arg" loading="lazy">
                             <div class="card-base-info">
@@ -136,7 +141,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card card-size-b" data-category="landingpage">
+                    <div class="project-card" data-category="landingpage">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #2a1a00 0%, #4a3000 100%);">
                             <img src="images/images-proyects/item-cocina.png" alt="Ebook Cocina" loading="lazy">
                             <div class="card-base-info">
@@ -150,7 +155,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card card-size-d" data-category="linkhub">
+                    <div class="project-card" data-category="linkhub">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #050a14 0%, #0a1428 100%);">
                             <img src="images/images-proyects/item-companiausa.png" alt="Tu Compañía en USA" loading="lazy">
                             <div class="card-base-info">
@@ -164,7 +169,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card card-size-c" data-category="ecommerce">
+                    <div class="project-card" data-category="ecommerce">
                         <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #001a2e 0%, #00304d 100%);">
                             <img src="images/images-proyects/item.chascomus.png" alt="Náutica Chascomús" loading="lazy">
                             <div class="card-base-info">
@@ -178,6 +183,77 @@
                         </div>
                     </div>
 
+                    <div class="project-card" data-category="onepage">
+                        <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #14050a 0%, #2e0a1a 100%);">
+                            <img src="images/images-proyects/item-blackforce.png" alt="Blackforce Training" loading="lazy">
+                            <div class="card-base-info">
+                                <span class="overlay-tag">One Page</span>
+                                <h4>Blackforce Training</h4>
+                            </div>
+                            <div class="project-overlay">
+                                <p>One page de alto contraste para box y entrenamiento funcional de combate.</p>
+                                <span class="card-cta">Ver proyecto <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="institucional">
+                        <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #0a3020 0%, #0f5a38 100%);">
+                            <img src="images/images-proyects/item-calamuchita.png" alt="Turismo Calamuchita" loading="lazy">
+                            <div class="card-base-info">
+                                <span class="overlay-tag">Institucional</span>
+                                <h4>Valle de Calamuchita</h4>
+                            </div>
+                            <div class="project-overlay">
+                                <p>Portal turístico regional con mapa interactivo y guía de alojamientos.</p>
+                                <span class="card-cta">Ver proyecto <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="onepage">
+                        <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #1a0a2e 0%, #33104a 100%);">
+                            <img src="images/images-proyects/item-misticagym.png" alt="Mística Gym" loading="lazy">
+                            <div class="card-base-info">
+                                <span class="overlay-tag">One Page</span>
+                                <h4>Mística Gym</h4>
+                            </div>
+                            <div class="project-overlay">
+                                <p>One page con planes de entrenamiento, horarios y turnos online.</p>
+                                <span class="card-cta">Ver proyecto <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="institucional">
+                        <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #0a1a30 0%, #16305a 100%);">
+                            <img src="images/images-proyects/item-psicologa.jpg" alt="Consultorio de Psicología" loading="lazy">
+                            <div class="card-base-info">
+                                <span class="overlay-tag">Institucional</span>
+                                <h4>Consultorio Psicológico</h4>
+                            </div>
+                            <div class="project-overlay">
+                                <p>Sitio profesional con reserva de turnos online y sección de recursos.</p>
+                                <span class="card-cta">Ver proyecto <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="institucional">
+                        <div class="project-img-container" style="--card-fallback: linear-gradient(135deg, #201030 0%, #3a1a52 100%);">
+                            <img src="images/images-proyects/item-psicopedagoga.png" alt="Gabinete Psicopedagógico" loading="lazy">
+                            <div class="card-base-info">
+                                <span class="overlay-tag">Institucional</span>
+                                <h4>Gabinete Psicopedagógico</h4>
+                            </div>
+                            <div class="project-overlay">
+                                <p>Web institucional con presentación de servicios y formulario de contacto.</p>
+                                <span class="card-cta">Ver proyecto <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
                 </div>
 
             </div>
