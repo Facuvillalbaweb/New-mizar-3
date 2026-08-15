@@ -411,7 +411,8 @@ ul  { list-style: none; }
     display: flex;
     min-width: 100%;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
+    gap: 1rem;
 }
 
 .content-wrapper {
@@ -1076,9 +1077,9 @@ ul  { list-style: none; }
 
 /* Tab: general */
 .about-description {
-    font-size: 1.29rem;
+    font-size: 1.5rem;
     color: var(--text-muted);
-    line-height: 1.9;
+    line-height: 1.7;
     max-width: 600px;
     margin-bottom: 2.5rem;
     text-align: start;
@@ -1089,8 +1090,9 @@ ul  { list-style: none; }
 .founders-container {
     display: grid;
     grid-template-rows: auto;
-    gap: 24px;
+    gap: 12px;
     max-width: 700px;
+    align-items:start;
 }
 
 .founder-card {
@@ -1410,10 +1412,35 @@ ul  { list-style: none; }
    13. MEDIA QUERIES — RESPONSIVO
    ============================================================ */
 
-@media (max-width: 1080px) {
-    
+@media (max-width: 1178px) {
+    .about-description {
+        font-size: 1.27rem;
+        margin-bottom: 2rem;
+    }
 }
 
+@media (max-width: 1070px) {
+    .about-description {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .glitch-title {
+        font-size: 2.2rem;
+        margin-bottom: .8rem;
+        width: 420px;
+    }
+    .subtitle {
+        font-size: 1rem;
+    }
+    .founder-card {
+        padding: 1.2rem;
+    }
+    .founder-img {
+        width: 100px;
+        height: 100px;
+    }
+}
 
 
 @media (max-width: 900px) {
@@ -1445,7 +1472,6 @@ ul  { list-style: none; }
 
     /* Home */
     .hero-actions {
-        flex-direction: column;
         align-items: center;
     }
     .btn-secondary { margin-left: 0; }
@@ -1460,8 +1486,10 @@ ul  { list-style: none; }
     .portfolio-grid { grid-template-rows: repeat(2, 190px); grid-auto-columns: 340px; gap: 14px; }
 
     /* Nosotros */
-    .founder-card { flex-direction: column; text-align: center; }
+    .founder-card { flex-direction: row; text-align: center; padding: 1rem; }
+    .founder-img{ width: 94px; height: 94px; }
     .about-sub-nav { gap: 6px; }
+    .about-description { font-size: 1rem; margin-bottom: 1.8rem; }
 
     /* Contacto */
     .glass-form { padding: 1.8rem 1.4rem; }
@@ -1469,6 +1497,163 @@ ul  { list-style: none; }
     /* Tools grid más compacto */
     .tools-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
 }
+
+@media (max-width: 732px) {
+    .about-founders-container{
+        flex-direction: column;
+        align-items: start;
+        gap: 2px;
+    }
+    
+    .glitch-title{
+        font-size: 2rem;
+    }
+
+    .about-description{
+        margin-bottom: .5rem;
+    }
+
+    .hero-block{
+        gap: 1px;
+    }
+
+    .founders-container{
+        gap: 4px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .founder-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+        flex: min-content;
+        align-items: center;
+    }
+    .founder-info h3, .founder-info .role, .founder-info p{
+        text-align: center;
+    }
+        .about-header-container{
+        display: block;
+        margin-bottom: 1rem;
+        width: 100%;;
+    }
+    .title-about-hero{
+        font-size: 1.5rem;
+        text-align: start;
+        width: 100%;
+    }
+
+    .hero-text-container{
+        padding: 0;
+        margin-bottom: .5rem;
+    }
+}
+
+@media (max-width: 630px) {
+    .about-founders-container{
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .hero-text-container{
+        padding: 0;
+        margin-bottom: 0%;
+    }
+    .hero-reviews-content{
+        justify-content: center;
+        margin-bottom: .5rem;
+    }
+    .content-button{
+        display:none
+    }
+    .glitch-title{
+        font-size: 1.8rem;
+        text-align: center;
+    }
+    .hero-actions{
+        justify-content: center;
+    }
+    .btn-primary, .btn-secondary{
+        padding: 0.65rem 1.5rem;
+    }
+    .subtitle{
+        text-align: center;
+    }
+    .title-about-hero{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .about-header-container{
+        display: block;
+        margin-bottom: 0rem;
+        width: 100%;
+    }
+    .center-content .section-title::after{
+        display: none;
+    }
+    .founders-container{
+        gap: 4px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .about-description{
+        font-size: .97rem;
+        margin-bottom: .2rem;
+        text-align: center;
+    }
+        .founder-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+        flex: min-content;
+        align-items: center;
+    }
+    .founder-info h3, .founder-info .role, .founder-info p{
+        text-align: center;
+    }
+    
+}
+
+@media (max-width: 548px) {
+
+    .hero-block{
+        gap: 26px;
+    }
+
+
+    .glitch-title{
+        text-align: center;
+        font-size: 2.3rem;
+    }
+    .founders-container {
+        gap: 4px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-content: stretch;
+        align-items: stretch;
+    }
+
+    .about-header-container{
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .founder-info p{
+        display: none;
+    }
+
+    .about-founders-container{
+        gap: 12px;
+    }
+}
+
+
+
 
 @media (max-width: 480px) {
     .services-grid { grid-template-columns: 1fr; }
